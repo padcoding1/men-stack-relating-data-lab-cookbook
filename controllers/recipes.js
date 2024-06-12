@@ -6,7 +6,8 @@ const router = express.Router();
 const User = require('../models/user.js');
 const Recipe = require('../models/recipe.js');
 
-router.get('/', async (req, res) => {
+
+router.get('/', (req, res) => {
   console.log("router recipes/index.ejs");
   try {
     res.render('recipes/index.ejs');

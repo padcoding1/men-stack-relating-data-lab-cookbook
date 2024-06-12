@@ -52,9 +52,10 @@ router.post('/sign-in', async (req, res) => {
   try {
     console.log("Trying auth  router.post /sign-in")
     // First, get the user from the database
-    console.log(User);
-    console.log(User.username);
-    const userInDatabase = await User.findOne({ username: req.body.username });
+    console.log(req.body);
+    const username = req.body.username;
+    console.log("const username: ", username);
+    const userInDatabase = await User.findOne({ username: username });
     if (!userInDatabase) {
       return res.send('Login failed. Please try again.');
     }

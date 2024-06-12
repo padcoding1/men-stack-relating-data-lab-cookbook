@@ -16,7 +16,9 @@ const passUserToView = require('./middleware/pass-user-to-view.js');
 const authController = require('./controllers/auth.js');
 const recipesController = require('./controllers/recipes.js');
 const ingredientsController = require('./controllers/ingredients.js');
-
+app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
 
 
@@ -28,14 +30,6 @@ app.use(
   })
   
 );
-//
-
-// app.get('/recipes/index', async (req, res) => {
-//       res.render('recipes/index.ejs', {
-//         user: req.session.user,
-// })});
-
-// below middleware
 
 app.use(passUserToView);
 
@@ -67,9 +61,7 @@ mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
-app.use(express.urlencoded({ extended: false }));
-app.use(methodOverride('_method'));
-app.use(morgan('dev'));
+
 
 
 
