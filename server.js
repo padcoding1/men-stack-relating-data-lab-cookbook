@@ -7,14 +7,56 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 
+const User = require('./models/user.js');
+const Recipe = require('./models/recipe.js');
 
 //Middleware
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
-
 const authController = require('./controllers/auth.js');
 const recipesController = require('./controllers/recipes.js');
 const ingredientsController = require('./controllers/ingredients.js');
+
+
+
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+  
+);
+//
+
+// app.get('/recipes/index', async (req, res) => {
+//       res.render('recipes/index.ejs', {
+//         user: req.session.user,
+// })});
+
+// below middleware
+
+app.use(passUserToView);
+
+
+app.get('/', (req, res) => {
+    console.log("--server.js get '/' render index.ejs");
+  res.render('index.ejs', {
+    user: req.session.user,
+  });
+});
+
+app.use('/auth', authController);
+app.use(isSignedIn);
+
+
+app.use('/recipes', recipesController);
+
+app.use('/ingredients', ingredientsController);
+
+
+
 
 
 const port = process.env.PORT ? process.env.PORT : '3000';
@@ -29,28 +71,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  })
-  
-);
 
-// below middleware
-app.use(passUserToView);
-app.use('/auth', authController);
-app.use(isSignedIn);
-app.use('/recipes', recipesController);
-app.use('/ingredients', ingredientsController);
-
-
-app.get('/', (req, res) => {
-  res.render('index.ejs', {
-    user: req.session.user,
-  });
-});
 
 app.get('/vip-lounge', (req, res) => {
   if (req.session.user) {
@@ -60,7 +81,7 @@ app.get('/vip-lounge', (req, res) => {
   }
 });
 
-app.use('/auth', authController);
+
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

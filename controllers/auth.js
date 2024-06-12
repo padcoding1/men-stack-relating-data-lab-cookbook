@@ -5,14 +5,17 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user.js');
 
 router.get('/sign-up', (req, res) => {
+  console.log("controller auth auth/signup");
   res.render('auth/sign-up.ejs');
 });
 
 router.get('/sign-in', (req, res) => {
+  console.log("controller auth auth/signin");
   res.render('auth/sign-in.ejs');
 });
 
 router.get('/sign-out', (req, res) => {
+  console.log("controller SIGNOUT");
   req.session.destroy();
   res.redirect('/');
 });
@@ -47,7 +50,10 @@ router.post('/sign-up', async (req, res) => {
 
 router.post('/sign-in', async (req, res) => {
   try {
+    console.log("Trying auth  router.post /sign-in")
     // First, get the user from the database
+    console.log(User);
+    console.log(User.username);
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (!userInDatabase) {
       return res.send('Login failed. Please try again.');

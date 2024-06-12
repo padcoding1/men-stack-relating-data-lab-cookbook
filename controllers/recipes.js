@@ -6,6 +6,15 @@ const router = express.Router();
 const User = require('../models/user.js');
 const Recipe = require('../models/recipe.js');
 
-// router logic will go here - will be built later on in the lab
+router.get('/', async (req, res) => {
+  console.log("router recipes/index.ejs");
+  try {
+    res.render('recipes/index.ejs');
+  } catch (error) {
+    console.log(error)
+    res.redirect('/')
+  }
+    //res.redirect('recipes/index.ejs');
+  });
 
 module.exports = router;
