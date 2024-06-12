@@ -1,0 +1,6 @@
+<a href ='/'>Home</a>
+<% if (user) { %>
+    <a href='/users/<%user._id%>/applications'>View My Recipes</a>
+    <a href='/recipes/index'>View My Recipes</a>
+    <a href='/recipes/index'>Sign Out</a>
+<% } %>

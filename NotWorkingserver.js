@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
-
+const MongoStore = require("connect-mongo");
 
 //Middleware
 const isSignedIn = require('./middleware/is-signed-in.js');
@@ -22,8 +22,9 @@ app.use(isSignedIn);
 app.use('/recipes', recipesController);
 app.use('/ingredients', ingredientsController);
 
-const port = process.env.PORT ? process.env.PORT : '3000';
 
+
+const port = process.env.PORT ? process.env.PORT : '3000';
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', () => {
@@ -38,8 +39,10 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
   })
-);
+}));
 
 app.get('/', (req, res) => {
   res.render('index.ejs', {
