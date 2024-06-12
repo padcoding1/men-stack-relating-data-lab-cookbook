@@ -11,11 +11,34 @@ router.get('/', (req, res) => {
   console.log("router recipes/index.ejs");
   try {
     res.render('recipes/index.ejs');
-  } catch (error) {
-    console.log(error)
-    res.redirect('/')
+  } 
+  catch (error) {
+    console.log(error);
+    res.redirect('/');
   }
-    //res.redirect('recipes/index.ejs');
-  });
+});
+
+router.get('/new', (req, res) => {
+  console.log("router recipes/new.ejs");
+  try {
+    res.render('recipes/new.ejs');
+  } 
+  catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
+
+router.get('/edit', (req, res) => {
+  console.log("router recipes/edit.ejs");
+  try {
+    res.render('recipes/edit.ejs');
+  } 
+  catch (error) {
+    console.log(error);
+    res.redirect('/');
+  }
+});
+  
 
 module.exports = router;
