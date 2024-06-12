@@ -11,16 +11,11 @@ const session = require('express-session');
 //Middleware
 const isSignedIn = require('./middleware/is-signed-in.js');
 const passUserToView = require('./middleware/pass-user-to-view.js');
+
 const authController = require('./controllers/auth.js');
 const recipesController = require('./controllers/recipes.js');
 const ingredientsController = require('./controllers/ingredients.js');
 
-// below middleware
-app.use(passUserToView);
-app.use('/auth', authController);
-app.use(isSignedIn);
-app.use('/recipes', recipesController);
-app.use('/ingredients', ingredientsController);
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
@@ -32,14 +27,24 @@ mongoose.connection.on('connected', () => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
   })
+  
 );
+
+// below middleware
+app.use(passUserToView);
+app.use('/auth', authController);
+app.use(isSignedIn);
+app.use('/recipes', recipesController);
+app.use('/ingredients', ingredientsController);
+
 
 app.get('/', (req, res) => {
   res.render('index.ejs', {
