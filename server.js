@@ -7,6 +7,13 @@ const methodOverride = require('method-override');
 const morgan = require('morgan');
 const session = require('express-session');
 
+mongoose.connect(process.env.MONGODB_URI);
+
+mongoose.connection.on('connected', () => {
+  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+});
+
+
 const User = require('./models/user.js');
 const Recipe = require('./models/recipe.js');
 
@@ -55,11 +62,6 @@ app.use('/ingredients', ingredientsController);
 
 const port = process.env.PORT ? process.env.PORT : '3000';
 
-mongoose.connect(process.env.MONGODB_URI);
-
-mongoose.connection.on('connected', () => {
-  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
-});
 
 
 
