@@ -39,43 +39,21 @@ app.use(
 );
 
 app.use(passUserToView);
-
+app.use('/auth', authController);
+app.use(isSignedIn);
+app.use('/recipes', recipesController);
+app.use('/ingredients', ingredientsController);
 
 app.get('/', (req, res) => {
     console.log("--server.js get '/' render index.ejs");
-  res.render('index.ejs', {
+    res.render('index.ejs', {
     user: req.session.user,
   });
 });
 
-app.use('/auth', authController);
-app.use(isSignedIn);
-
-
-app.use('/recipes', recipesController);
-
-app.use('/ingredients', ingredientsController);
-
-
-
 
 
 const port = process.env.PORT ? process.env.PORT : '3000';
-
-
-
-
-
-
-app.get('/vip-lounge', (req, res) => {
-  if (req.session.user) {
-    res.send(`Welcome to the party ${req.session.user.username}.`);
-  } else {
-    res.send('Sorry, no guests allowed.');
-  }
-});
-
-
 
 app.listen(port, () => {
   console.log(`The express app is ready on port ${port}!`);

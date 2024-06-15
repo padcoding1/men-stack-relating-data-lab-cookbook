@@ -1,0 +1,33 @@
+<!-- views/ingredients/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Ingredients</title>
+  </head>
+  <body>
+    <%- include('../partials/_navbar') %>
+    <h1>Welcome to My Ingredients</h1>
+    <h1>Create Ingredient</h1>
+    <form action="/ingredients" method="POST">
+      <label for="name">Ingredient Name:</label>
+      <input type="text" name="name" id="name" placeholder="Required" required/>
+      <button type="submit">Add New Ingredient</button>
+    </form>
+        <% console.log(allIngredients.length); %>
+        <% if (allIngredients.length === 0) { %>
+            <h2>You have not added any ingredients yet.</h2>
+            <% } %>
+        <% allIngredients.forEach(function(ingredient) { %>
+            <h3><%= ingredient.name %></a></h3>
+      <% }) %>
+ 
+
+  </body>
+  <script>
+       
+  </script>
+
+</html>
