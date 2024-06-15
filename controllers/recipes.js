@@ -24,10 +24,12 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/new', async (req, res) => {
-  console.log("router get recipes/new.ejs");
+  console.log("router get recipes/OGnew.ejs");
   try {
-    const allIngredients = await Ingredient.find({});
-    res.render('recipes/new.ejs', {allIngredients: allIngredients});
+    let allIngredients = await Ingredient.find({});
+    allIngredients = JSON.stringify(allIngredients);
+    console.log(allIngredients);
+    res.render('recipes/OGnew.ejs', {ingredientsData: allIngredients});
   } 
   catch (error) {
     console.log("ERROR: get /new", error);

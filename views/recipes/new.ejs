@@ -6,31 +6,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Recipe</title>
-    <script>
-      window.onload = function() {
-        const numberInput = document.getElementById('num');
-        numberInput.addEventListener('input', createDropdowns);
-
-        function createDropdowns() {
-          const dropdownContainer = document.getElementById('numberOfIngredients');
-          dropdownContainer.innerHTML = '';
-          for (let i = 0; i < numberInput.value; i++) {
-            const dropdown = document.createElement('select');
-            dropdown.name = `ingredient${i + 1}`;
-            // Loop through allIngredients array and create options
-            const allIngredients = <%= allIngredients %>;
-            allIngredients.forEach(ingredient => {
-              const option = document.createElement('option');
-              option.value = ingredient.name;
-              option.text = ingredient.name;
-              dropdown.appendChild(option);
-            });
-            dropdownContainer.appendChild(dropdown);
-          }
-        }
-        createDropdowns();
-      }
-    </script>
+    
   </head>
   <body>
     <%- include('../partials/_navbar') %>
@@ -48,5 +24,30 @@
 
       <button type="submit">Create Recipe</button>
     </form>
+    <script>
+        window.onload = function() {
+          const numberInput = document.getElementById('num');
+          numberInput.addEventListener('input', createDropdowns);
+  
+          function createDropdowns() {
+            const dropdownContainer = document.getElementById('numberOfIngredients');
+            dropdownContainer.innerHTML = '';
+            for (let i = 0; i < numberInput.value; i++) {
+              const dropdown = document.createElement('select');
+              dropdown.name = `ingredient${i + 1}`;
+              // Loop through allIngredients array and create options
+              const allIngredients = <%= allIngredients %>;
+              allIngredients.forEach(ingredient => {
+                const option = document.createElement('option');
+                option.value = ingredient.name;
+                option.text = ingredient.name;
+                dropdown.appendChild(option);
+              });
+              dropdownContainer.appendChild(dropdown);
+            }
+          }
+          createDropdowns();
+        }
+      </script>
   </body>
 </html>

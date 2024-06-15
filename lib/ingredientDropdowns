@@ -1,0 +1,26 @@
+ console.log("Running script...")
+    function createDropdowns() {
+        console.log("Creating Dropdowns...")
+        const dropdownContainer = document.getElementById('numberOfIngredients');
+        dropdownContainer.innerHTML = '';
+        for (let i = 0; i < numberInput.value; i++) {
+          const dropdown = document.createElement('select');
+          dropdown.name = `ingredient${i + 1}`;
+          // Loop through ingredientsData array and create options
+          const listIngredients = <%= ingredientsData %>;
+          listIngredients.forEach(ingredient => {
+            const option = document.createElement('option');
+            option.value = 1;//ingredient.name;
+            option.text = "1";//ingredient.name;
+            dropdown.appendChild(option);
+            });
+            dropdownContainer.appendChild(dropdown);
+            }
+            }
+      let button = document.getElementById("add-dropdown-button");
+      console.log("button");
+      button.addEventListener("click", () => console.log("Clicked button"));
+      const numberInput = document.getElementById('num');
+      numberInput.addEventListener('input', createDropdowns);
+      numberInput.parseInt(this.value);
+      createDropdowns();

@@ -13,55 +13,43 @@
     <form action="/recipes" method="POST">
       <label for="name">Recipe Name:</label>
       <input type="text" name="name" id="name" placeholder="Required" required/>
-
       <label for="instructions">Instructions:</label>
-      <input type="text" name="instructions" id="instructions" />
+      <input type="text" name="instructions" id="instructions"/>
       <button type="submit">Add Recipe to Database</button>
     </form>
-    <% console.log(allIngredients); %>
-    <% console.log(allIngredients.length); %>
-    <% if (allIngredients.length === 0) { %>
-        <h2>You have not added any ingredients yet.</h2>
-    <% } %>
-    <label for="num">Select Ingredients:</label>
-    <div id="numberOfIngredients"></div>
-    <input type="text" name="num" id="num" placeholder="1" required>
-    
-   
-      
-
-    
-    <button onclick="addDropdowns(num,<%= allIngredients%>)">Add</button>
-    <% allIngredients.forEach(function(ingredient) { %>
-          <h3><%= ingredient.name %></a></h3>
-    <% }); %>
-<% console.log("typeOf: ", typeof allIngredients, "typeof all Ingredients.name", typeof allIngredients.name); %>
-
-
-  </body>
-  <script>
-    function addDropdowns(numIngredients, allIngredients) {
-      console.log("numIngredients: ", numIngredients, allIngredients);
-   
-      let ingredientDropdowns = numIngredients;
-      ingredientDropdowns.innerHTML = '';
-      
-      numberOfIngredients = parseInt(this.value);
-      
-      for (let i = 0; i < numberOfIngredients; i++) {
-      let dropdown = document.createElement('select');
-      dropdown.name = 'ingredient-' + i;
-      dropdown.id = 'ingredient-' + i;
-      allIngredients.forEach(ingredient => {
-        let option = document.createElement('option');
-        option.value = ingredient.name;
-        option.text = ingredient.name;
+  <% console.log(ingredientsData); %>
+  <% console.log(ingredientsData.length); %>
+  <% if (ingredientsData.length === 0) { %>
+      <h2>You have not added any ingredients yet.</h2>
+  <% } %>
+  <label for="num">Select Ingredients:</label>
+  <input type="text" name="num" id="num" placeholder="Enter # of ingredients" min="1" required>  
+  <div id="dropdown-div"></div>
+  <button id="add-dropdown-button">Add</button> 
+  <script type="text/javascript">
+  console.log("Running script...")
+  function createDropdowns() {
+    console.log("Creating Dropdowns...")
+    const dropdownContainer = document.getElementById('dropdown-div');
+    dropdownContainer.innerHTML = '';
+    for (let i = 0; i < numberInput.value; i++) {
+      const dropdown = document.createElement('select');
+      dropdown.name = `ingredient${i + 1}`;
+      // Loop through ingredientsData array and create options
+      const listIngredients = <%= JSON.stringify(ingredientsData) %>;
+      //listIngredients = [1,2,3,4];   **IF I REMOVE ANY REFERENCE TO ingredientsDATA and USE this array, the dropdowns will appear but I cannot populate them with the ingredientsData
+      listIngredients.forEach(ingredient => {
+        const option = document.createElement('option');
+        option.value = 1;//Should be ingredient.name (or ingredient._id)
+        option.text = 1; //Should be ingredient.name
         dropdown.appendChild(option);
       });
-      ingredientDropdowns.appendChild(dropdown);
-      }
+    dropdownContainer.appendChild(dropdown);
     }
-  
-      </script>
-
+  }
+      const numberInput = document.getElementById('num');
+      let button = document.getElementById("add-dropdown-button");
+      button.addEventListener("click", createDropdowns);
+  </script>
+  </body>
 </html>
